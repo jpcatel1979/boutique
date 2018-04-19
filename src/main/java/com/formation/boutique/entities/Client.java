@@ -1,12 +1,15 @@
 package com.formation.boutique.entities;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
@@ -54,5 +57,14 @@ public class Client {
 	@Enumerated(EnumType.STRING)
 	@Column(columnDefinition = "VARCHAR(20)")
 	private Civilite civilite;
-
+	
+	
+	//@ManyToMany(cascade = CascadeType.ALL)
+//	@JoinTable(name = "Commande",
+	//	joinColumns = {@JoinColumn (name = "email")},
+//		inverseJoinColumns = {@JoinColumn (name = "code")})
+			
+//	private Collection <Article> article;
+	@OneToMany (mappedBy = "client")
+	private Collection <Commande> commande = new ArrayList<>();
 }

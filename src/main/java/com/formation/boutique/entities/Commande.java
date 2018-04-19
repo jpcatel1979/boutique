@@ -1,19 +1,26 @@
 package com.formation.boutique.entities;
 
+import java.sql.Date;
+
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
-public class Image {
+public class Commande {
 	@Id
-	@GeneratedValue
-	private Long id;
 	@NotNull
-	private String lien;
+	private Integer idCommande;
+	@NotNull
+	private Integer code;
+	@DateTimeFormat
+	private Date date;
+	
+	@ManyToOne
+	private Client client;
 	@ManyToOne
 	private Article article;
-
 }
