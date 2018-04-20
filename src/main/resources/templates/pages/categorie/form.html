@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF8">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<title>Formulaire ajout categorie</title>
+</head>
+<body>
+<fieldset>
+<legend>Ajout d'une categorie dans la base</legend>
+<form  th:action="@{/categorie/create}" th:method="post">
+
+<label>Nom : </label><input type="text" th:field="${categorie.nom}">
+<span th:if="${#fields.hasErrors('categorie.nom')}" th:errors="${categorie.nom}"></span>
+
+<label>Categorie mere : </label>
+<select th:field="${categorie.id}">
+
+<option value="">Sans</option>
+<option th:each="cat : ${lstCategorie}" th:value="${cat.id}" th:text="${cat.nom}"></option>
+
+</select>
+<input type=submit>
+</form>
+</fieldset>
+</body>
+</html>
