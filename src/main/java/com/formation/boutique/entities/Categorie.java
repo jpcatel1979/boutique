@@ -3,6 +3,7 @@ package com.formation.boutique.entities;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,27 +13,30 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.beans.factory.annotation.Qualifier;
+
 @Entity
 public class Categorie {
 	@Id
 	@GeneratedValue
 	private Long id;
+	
 	@NotBlank
 	@Column(length = 100)
 	private String nom;
 	
-	@OneToOne
-	private Categorie categorie;
+	@OneToOne(cascade = CascadeType.PERSIST, orphanRemoval = false)
+	private Categorie parent;
 	
 	@OneToMany(mappedBy="categorie")
 	private Collection <Article> article = new ArrayList<Article> ();
 
 
-	public Categorie(Long id, @NotNull String nom, Categorie categorie, Collection<Article> article) {
+	public Categorie(Long id, @NotNull String nom, Categorie parent, Collection<Article> article) {
 
 		this.id = id;
 		this.nom = nom;
-		this.categorie = categorie;
+		this.parent = parent;
 		this.article = article;
 	}
 
@@ -47,7 +51,7 @@ public class Categorie {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
+	@Qualifier("nom")
 	public String getNom() {
 		return nom;
 	}
@@ -56,12 +60,12 @@ public class Categorie {
 		this.nom = nom;
 	}
 
-	public Categorie getCategorie() {
-		return categorie;
+	public Categorie getParent() {
+		return parent;
 	}
 
-	public void setCategorie(Categorie categorie) {
-		this.categorie = categorie;
+	public void setParent(Categorie parent) {
+		this.parent = parent;
 	}
 
 	public Collection<Article> getArticle() {
@@ -74,7 +78,7 @@ public class Categorie {
 
 	@Override
 	public String toString() {
-		return "Categorie [id=" + id + ", nom=" + nom + ", categorie=" + categorie + ", article=" + article + "]";
+		return "Categorie [id=" + id + ", nom=" + nom + ", parent=" + parent + ", article=" + article + "]";
 	}
 	
 	

@@ -1,0 +1,37 @@
+
+<nav th:fragment="top" class="navbar navbar-nav">
+	<div class="container-fluid">
+		<div class="btn-group" role="group"
+			aria-label="Button group with nested dropdown">
+			<button type="button" class="btn btn-info">Article</button>
+			<div class="btn-group" role="group">
+				<button id="btnGroupDrop3" type="button"
+					class="btn btn-info dropdown-toggle" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="true"></button>
+				<div class="dropdown-menu" aria-labelledby="btnGroupDrop3"
+					x-placement="bottom-start"
+					style="position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
+					<a class="dropdown-item" href="/article/create">Creation</a>
+					<a class="dropdown-item" href="/article/suppression">Modification</a>
+					<a class="dropdown-item" href="/article/suppression">Suppression</a>
+					<a class="dropdown-item" href="/article/list">Liste</a>
+				</div>
+			</div>
+		
+			<button type="button" class="btn btn-info">Categorie</button>
+			<div class="btn-group" role="group">
+				<button id="btnGroupDrop3" type="button"
+					class="btn btn-info dropdown-toggle" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="true"></button>
+				<div class="dropdown-menu" aria-labelledby="btnGroupDrop3"
+					x-placement="bottom-start"
+					style="position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
+					<a class="dropdown-item" href="/categorie/create">Creation</a>
+					<a	class="dropdown-item" href="/categorie/update">Modification</a>
+					<a class="dropdown-item" href="/categorie/delete">Suppression</a>
+					<a class="dropdown-item" href="/categorie/list">Liste</a>
+				</div>
+			</div>
+		</div>
+	</div>	
+</nav>

@@ -1,27 +1,83 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF8">
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
-<title>Formulaire ajout categorie</title>
-</head>
-<body>
-<fieldset>
-<legend>Ajout d'une categorie dans la base</legend>
-<form  th:action="@{/categorie/create}" th:method="post">
+	<th:block xmlns:th="https://www.thymeleaf.org" th:replace="/fragments/header :: header" ></th:block>
 
-<label>Nom : </label><input type="text" th:field="${categorie.nom}">
+<body>
+	<th:block xmlns:th="https://www.thymeleaf.org" th:replace="/fragments/nav :: top" ></th:block>
+
+<div>
+<fieldset class="form-group">
+<legend th:text="${title}"></legend>
+
+<form th:if="${action} == '/categorie/create'"  th:action="@{${action}}" th:method=${method}>
+<div class="xs-12 form-group">
+
+<label>Nom : </label><input class="form-control" type="text" th:field="${categorie.nom}">
 <span th:if="${#fields.hasErrors('categorie.nom')}" th:errors="${categorie.nom}"></span>
+</div>
+<div class="xs-12 form-group">
 
 <label>Categorie mere : </label>
-<select th:field="${categorie.id}">
+<select class="custom-select" th:field="${categorie.id}">
 
 <option value="">Sans</option>
 <option th:each="cat : ${lstCategorie}" th:value="${cat.id}" th:text="${cat.nom}"></option>
 
 </select>
-<input type=submit>
+</div>
+<div class="xs-12">
+<input class="button" type=submit>
+</div>
 </form>
+
+<form th:if="${action} == '/categorie/delete'"  th:action="@{${action}}" th:method=${method}>
+
+<div class="xs-12 form-group">
+
+<label>Categorie : </label>
+<select class="custom-select" th:field="${categorie.id}">
+
+<option th:each="cat : ${lstCategorie}" th:value="${cat.id}" th:text="${cat.nom}"></option>
+
+</select>
+</div>
+<div class="xs-12">
+<input class="button" type=submit>
+</div>
+</form>
+
+
+<form th:if="${action} == '/categorie/update'"  th:action="@{${action}}" th:method=${method}>
+
+<div class="xs-12 form-group">
+
+<label>Selection Categorie </label>
+<select class="custom-select" path="operation" onchange="getVal()">
+
+<option th:each="cat : ${lstCategorie}" th:value="${cat.id}" th:text="${cat.nom}"></option>
+
+</select>
+<label >ID categorie</label>
+<input type=text readonly="readonly" th:field="${categorie.id}">
+<label >Nouveau Nom de la categorie categorie</label>
+<input type=text readonly="readonly" th:field="${categorie.nom}">
+
+</div>
+<div class="xs-12">
+<input class="button" type=submit>
+</div>
+</form>
+
+
 </fieldset>
+<span th:text="${method}"></span>
+	
+	<th:block xmlns:th="https://www.thymeleaf.org" th:replace="/fragments/footer :: footer" ></th:block>
+</div>
 </body>
+<script type="text/javascript">
+	function getval(){
+	    alert("test");
+	}
+</script>
 </html>

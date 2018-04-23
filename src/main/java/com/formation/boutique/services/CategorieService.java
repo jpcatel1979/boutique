@@ -1,7 +1,5 @@
 package com.formation.boutique.services;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,14 +21,19 @@ public class CategorieService {
 		return categorieRepository.findAll();
 	}
 	
-	public Categorie save(Categorie categorie){
+	public Categorie save(final Categorie categorie){
 		return categorieRepository.save(categorie);
 	}
 	
-	public Categorie getOne(Long id){
+	public Categorie getOne(final Long id){
 		Categorie parent = new Categorie();
 		parent = categorieRepository.findById(id).get(); 
 		return parent;
+	}
+
+	public void delete(final Long id) {
+		categorieRepository.deleteById(id);
+		
 	}
 	
 }

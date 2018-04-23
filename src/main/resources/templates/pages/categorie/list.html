@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<th:block xmlns:th="https://www.thymeleaf.org" th:replace="/fragments/header :: header" ></th:block>
+
+</head>
+<body>
+	<th:block xmlns:th="https://www.thymeleaf.org" th:replace="/fragments/nav :: top" ></th:block>
+
+	<table class="table table-bordered table-hover ">
+		<tr>
+			<th>Identifiant</th>
+			<th>Nom</th>
+			<th>Parent</th>
+
+		</tr>
+		<tr th:each="categorie : ${lstCategorie}">
+		<td th:text="${categorie.id}"> </td>
+		<td th:text="${categorie.nom}"></td>
+		<td th:if="${categorie.parent} != null" th:text="${categorie.parent.nom}"></td>
+		<td th:if="${categorie.parent} == null">Sans</td>
+		
+		</tr>
+	</table>
+	<th:block xmlns:th="https://www.thymeleaf.org" th:replace="/fragments/footer :: footer" ></th:block>
+</body>
+</html>

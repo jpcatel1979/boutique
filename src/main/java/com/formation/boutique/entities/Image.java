@@ -46,4 +46,9 @@ public class Image {
 		this.article = article;
 	}
 
+	@Override
+	public String toString() {
+		return "Image [id=" + id + ", lien=" + lien + ", article=" + article + "]";
+	}
+
 }

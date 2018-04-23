@@ -16,18 +16,22 @@ import com.formation.boutique.entities.Categorie;
 import com.formation.boutique.entities.Image;
 import com.formation.boutique.services.ArticleService;
 import com.formation.boutique.services.CategorieService;
+import com.formation.boutique.services.ImageService;
 
 @Controller
 public class ArticleController {
 
 	private final ArticleService articleService;
 	private final CategorieService categorieService;
+	private final ImageService imageService;
+
 
 	@Autowired
-	public ArticleController(ArticleService articleService, CategorieService categorieService) {
+	public ArticleController(ArticleService articleService, CategorieService categorieService, ImageService imageService) {
 
 		this.articleService = articleService;
 		this.categorieService = categorieService;
+		this.imageService = imageService;
 	}
 	
 	
@@ -38,27 +42,36 @@ public class ArticleController {
 		model.addAttribute("image", new Image());
 		model.addAttribute("lstCategorie", categorieService.getAll() );
 		model.addAttribute("action", "/article/create");
+		model.addAttribute("title","Ajout Article");
 		
 		return "pages/article/form";
 	}
-
+	
+	@GetMapping("article/list")
+	public String getAll(ModelMap model){
+		model.addAttribute("lstArticle", articleService.getAll());
+		model.addAttribute("title","Liste des Articles");
+		return "pages/article/list";
+	}
+	
+	
 	@PostMapping("/article/create")
 	public String save(
 			@Valid @ModelAttribute(name = "article") Article article, BindingResult articleResult,
-			@Valid @ModelAttribute(name = "categorie") Categorie categorie, BindingResult categorieResult,
+			@Valid @ModelAttribute(name = "image") Image image, BindingResult imageResult,
 			ModelMap model ){
-		/*if(categorie.getNom().equals("nouvelle")){
-			return "redirect:/categorie/create";
-		}*/
+		model.addAttribute("lstCategorie", categorieService.getAll() );
+		model.addAttribute("action", "/article/create");
+		model.addAttribute("title","Ajout Article");
 		
-		System.out.println(model);
-		
-		
-		if(articleResult.hasErrors() || categorieResult.hasErrors()){
+		if(articleResult.hasErrors()) {
 			return "/pages/article/form";
 		}
 		
 		articleService.save(article);
+		image.setArticle(article);
+		imageService.save(image);
+		
 		return "redirect:/";
 	}
 }
