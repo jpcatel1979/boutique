@@ -1,5 +1,7 @@
 package com.formation.boutique.services;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,12 +19,21 @@ public class ArticleService {
 		this.articleRepository = articleRepository;
 	}
 	
+	public Article getOne(final Long id){
+		Article article	= articleRepository.findById(id).get() ; 
+		return article;
+	}
+	
 	public Iterable<Article> getAll(){
 		return articleRepository.findAll();
 	}
 	
 	public Article save(Article article){
 		return articleRepository.save(article);
+	}
+
+	public void delete(@Valid Article article) {
+		articleRepository.deleteById(article.getCode());
 	}
 	
 }

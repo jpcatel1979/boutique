@@ -1,5 +1,7 @@
 package com.formation.boutique.services;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,10 @@ public class ImageService {
 	
 	public Image save(Image image){
 		return imageRepository.save(image);
+	}
+
+	public void delete(@Valid Image image) {
+		imageRepository.deleteById(image.getId());
 	}
 	
 }

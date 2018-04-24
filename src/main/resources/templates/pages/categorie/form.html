@@ -4,18 +4,31 @@
 
 <body>
 	<th:block xmlns:th="https://www.thymeleaf.org" th:replace="/fragments/nav :: top" ></th:block>
+<script>
+$(document).ready(function(){
+    $("#list").change(function(){
+        var id = $('#list option:selected').val();
+        var nom = $('#list option:selected').text();
+      	$("#id").val(id);
+      	$("#nom").val(nom);
+      	
+    });
+});
+</script>
 
-<div>
+
+<div class=container>
 <fieldset class="form-group">
-<legend th:text="${title}"></legend>
+<legend th:f th:text="${title}"></legend>
+<!--  formulaire pour créer -->
 
-<form th:if="${action} == '/categorie/create'"  th:action="@{${action}}" th:method=${method}>
+<form name="form" th:if="${method} == 'POST'"  th:action="@{${action}}" th:method=${method}>
 <div class="xs-12 form-group">
 
 <label>Nom : </label><input class="form-control" type="text" th:field="${categorie.nom}">
 <span th:if="${#fields.hasErrors('categorie.nom')}" th:errors="${categorie.nom}"></span>
 </div>
-<div class="xs-12 form-group">
+<div class="xs-3 form-group">
 
 <label>Categorie mere : </label>
 <select class="custom-select" th:field="${categorie.id}">
@@ -29,10 +42,10 @@
 <input class="button" type=submit>
 </div>
 </form>
+<!--  formulaire pour effacer -->
+<form th:if="${method} == 'DELETE'"  th:action="@{${action}}" th:method="${method}">
 
-<form th:if="${action} == '/categorie/delete'"  th:action="@{${action}}" th:method=${method}>
-
-<div class="xs-12 form-group">
+<div class="xs-3 form-group">
 
 <label>Categorie : </label>
 <select class="custom-select" th:field="${categorie.id}">
@@ -46,38 +59,37 @@
 </div>
 </form>
 
+<!--  formulaire pour mettre à jour -->
 
-<form th:if="${action} == '/categorie/update'"  th:action="@{${action}}" th:method=${method}>
+<form th:if="${method} == 'PUT'"  th:action="@{${action}}" th:method="${method}">
 
-<div class="xs-12 form-group">
+<div class="col-sm-3 form-group">
 
-<label>Selection Categorie </label>
-<select class="custom-select" path="operation" onchange="getVal()">
-
+<label>Selection</label>
+<select id="list" class="custom-select" path="operation" value="Choix">
+<option th:value="0">Choix</option>
 <option th:each="cat : ${lstCategorie}" th:value="${cat.id}" th:text="${cat.nom}"></option>
 
 </select>
-<label >ID categorie</label>
-<input type=text readonly="readonly" th:field="${categorie.id}">
-<label >Nouveau Nom de la categorie categorie</label>
-<input type=text readonly="readonly" th:field="${categorie.nom}">
+</div>
+<div class="col-sm-3">
+<input type=hidden readonly="readonly" th:field="${categorie.id}">
+<label >Nouveau nom :</label>
+<input class="form-control col-sm-12"  type=text  th:field="${categorie.nom}">
+
 
 </div>
-<div class="xs-12">
-<input class="button" type=submit>
+<br>
+<div class="col-sm-3">
+<input class="col-sm-12 btn btn-info text-light" type=submit>
 </div>
 </form>
-
+</div>
 
 </fieldset>
-<span th:text="${method}"></span>
 	
 	<th:block xmlns:th="https://www.thymeleaf.org" th:replace="/fragments/footer :: footer" ></th:block>
 </div>
 </body>
-<script type="text/javascript">
-	function getval(){
-	    alert("test");
-	}
-</script>
+
 </html>

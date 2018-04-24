@@ -1,8 +1,5 @@
 package com.formation.boutique.controller;
 
-import java.util.Collection;
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +10,10 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+
 import com.formation.boutique.entities.Categorie;
 import com.formation.boutique.services.CategorieService;
-
-import ch.qos.logback.core.net.SyslogOutputStream;
 
 
 @Controller
@@ -53,16 +50,15 @@ CategorieService categorieService;
 	}
 	
 	@GetMapping("/categorie/update")
-	public String geUpdate(ModelMap model) {
+	public String getUpdate(ModelMap model) {
 		
 		model.addAttribute("categorie", new Categorie());
 		model.addAttribute("lstCategorie", categorieService.getAll());
-		model.addAttribute("title","Mise à jour Categorie");
+		model.addAttribute("title","Mise a jour Categorie");
 		model.addAttribute("action","/categorie/update");
 		model.addAttribute("method","PUT");
 		return "pages/categorie/form";
 	}
-	
 	
 	
 	@GetMapping("/categorie/list")
@@ -94,6 +90,20 @@ CategorieService categorieService;
 		categorieService.save(categorie);
 		return "redirect:/";
 		
+	}
+	
+	@PutMapping("categorie/update")
+	public String update( Categorie categorie, BindingResult categorieResult, ModelMap model){
+		model.addAttribute("lstCategorie", categorieService.getAll());
+		model.addAttribute("title","Mise à jour Categorie");
+		model.addAttribute("action","/categorie/update");
+		model.addAttribute("method","PUT");
+		if(categorie.getNom().equals("")){
+			return "/pages/categorie/form";
+		}
+		categorie.setParent(categorieService.getOne(categorie.getId()).getParent());
+		categorieService.save(categorie);
+		return "redirect:/";
 	}
 	
 	@DeleteMapping("/categorie/delete")

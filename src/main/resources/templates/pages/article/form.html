@@ -3,37 +3,66 @@
 	<th:block xmlns:th="https://www.thymeleaf.org" th:replace="/fragments/header :: header" ></th:block>
 <body>
 	<th:block xmlns:th="https://www.thymeleaf.org" th:replace="/fragments/nav :: top" ></th:block>
+<div class="container">
+<fieldset class="form-group">
 
-<fieldset>
-
-<legend>Ajout d'un article dans la base</legend>
-<form  th:action="@{/article/create}" th:method="post" >
-<label>Code : </label><input type="text" th:field="*{article.code}">
+<legend th:text="${title}"></legend>
+<form th:if="${method} != 'DELETE'"  th:action="@{${action}}" th:method="${method}">
+<div class="col-sm-4">
+<label>Code : </label><input class="form-control col-sm-12"  type="text" th:field="*{article.code}">
 <span th:if="${#fields.hasErrors('article.code')}" th:errors="${article.code}"></span>
-
-<label>Nom : </label><input type="text" th:field="*{article.nom}">
+</div>
+<div class="col-sm-4">
+<label>Nom : </label><input class="form-control col-sm-12"  type="text" th:field="*{article.nom}">
 <span th:if="${#fields.hasErrors('article.nom')}" th:errors="${article.nom}"></span>
-<label>Prix HT : </label><input type="text" th:field="*{article.prix}">
+</div>
+<div class="col-sm-4">
+<label>Prix HT : </label><input class="form-control col-sm-12" type="text" th:field="*{article.prix}">
 <span th:if="${#fields.hasErrors('article.prix')}" th:errors="${article.prix}"></span>
-<label>Description : </label><textarea rows="10" cols="10" th:field="*{article.description}"></textarea>
+</div>
+<div class="col-sm-4">
+<label>Description : </label><textarea class="form-control col-sm-12" rows="10" cols="10" th:field="*{article.description}"></textarea>
 <span th:if="${#fields.hasErrors('article.description')}" th:errors="${article.description}"></span>
-<label>Nombre de ventes : </label><input type="number" th:field="*{article.nbVentes}">
+</div>
+<div class="col-sm-4">
+<label>Nombre de ventes : </label><input class="form-control col-sm-12" type="number" th:field="*{article.nbVentes}">
 <span th:if="${#fields.hasErrors('article.nbVentes')}" th:errors="${article.nbVentes}"></span>
-<label>Promo : </label><input type="number" th:field="*{article.promo}">
+</div>
+<div class="col-sm-4">
+<label>Promo : </label><input class="form-control col-sm-12" type="number" th:field="*{article.promo}">
 <span th:if="${#fields.hasErrors('article.promo')}" th:errors="${article.promo}"></span>
-
+</div>
+<div class="col-sm-4">
 <label>Categorie : </label>
-<select th:field="*{article.categorie}">
-
+<select class="form-control" th:field="*{article.categorie}">
 
 	<option th:each="cat : ${lstCategorie}" th:value="${cat.id}" th:text="${cat.nom}"></option>
 
 </select>
-<label>Image : </label><input type="text" th:field="*{image.lien}">
+</div>
+<div class="col-sm-4">
+<label>Image : </label><input class="form-control col-sm-12"  type="text" th:field="*{image.lien}">
+<input class="form-control col-sm-12"  type="hidden" th:field="*{image.id}">
 
-<input type=submit>
+</div>
+<div class="col-sm-4">
+<input class="col-sm-12 btn btn-info text-light" type=submit>
+</div>
+</form>
+
+<form th:if="${method} == 'DELETE'"  th:action="@{${action}}" th:method="${method}" >
+<p>Voulez vous effacer l'article avec le code <span th:text="${article.code}"></span> ?</p>
+<div class="row col-sm-4">
+	<div class="col-sm-6">
+		<input class="col-sm-12 btn btn-danger text-light" name="OUi" value="OUI" type=submit>
+	</div>
+	<div class="col-sm-6">
+		<a href="/article/list/"><input class="col-sm-12 btn btn-success text-light" name="NON" value="NON"></a></td>
+	</div>
+</div>	
 </form>
 </fieldset>
+</div>
 	<th:block xmlns:th="https://www.thymeleaf.org" th:replace="/fragments/footer :: footer" ></th:block>
 
 </body>

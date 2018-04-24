@@ -14,6 +14,8 @@
 			<th>Promo</th>
 			<th>Categorie</th>
 			<th>Image</th>
+			<th>Update</th>
+			<th>Suppresion</th>
 
 		</tr>
 		<tr th:each="art : ${lstArticle}">
@@ -24,7 +26,16 @@
 			<td th:text="${art.nbVentes}"></td>
 			<td th:text="${art.promo}"> %</td>
 			<td th:text="${art.categorie.nom}"></td>
-			<td th:text="${art.image}"></td>
+			<td th:each="pic : ${art.image}">
+			<img th:src="${pic.lien}"/>
+			</td>
+			<td name="idUpdate" th:value="${art.code}">
+			<a th:href="|/article/update/${art.code}|">update</a>
+			</td>
+			<td name="idDelete" th:value="${art.code}">
+			<a th:href="|/article/delete/${art.code}|">Delete</a>
+			
+			</td>
 		</tr>
 	</table>
 	

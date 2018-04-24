@@ -35,6 +35,7 @@ public class Article {
 	@OneToMany(mappedBy = "article")
 	private Collection <Image> image = new ArrayList<>();
 	
+
 	@ManyToOne
 	@NotNull
 	private Categorie categorie ; 
@@ -138,6 +139,5 @@ public class Article {
 	public void setCommande(Collection<Commande> commande) {
 		this.commande = commande;
 	}
-	
 	
 }
