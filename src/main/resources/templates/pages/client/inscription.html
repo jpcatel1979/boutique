@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<th:block xmlns:th="https://www.thymeleaf.org"
+	th:replace="/fragments/header :: header"></th:block>
+
+<body>
+	<th:block xmlns:th="https://www.thymeleaf.org"
+		th:replace="/fragments/nav :: user"></th:block>
+
+	<div class=container>
+		<form th:method="${method}" th:action="${action}">
+			<div class="col-sm-12">
+				<div class="row">
+					<div class="col-sm-12 form-group">
+						<h2 th:text="#{client.inscription.entete}"></h2>
+					</div>
+					<div class="col-sm-12 form-group row">
+
+						<div class="col-sm-2" th:each="civ : ${lstCivilite}">
+							<label class="col-sm-2 form-check-label"> <input
+								type="radio" class=" form-check-input"
+								th:field="*{client.civilite}" th:value="*{civ.titre}"
+								th:text="#{${civ.titre}}">
+						</div>
+					</div>
+					<div class="col-sm-6 form-group">
+						<label th:text="#{client.inscription.nom}"></label> <input
+							type="text" th:field="*{client.nom}"
+							th:placeholder="#{client.inscription.placeholder.nom}"
+							class="form-control"> <span
+							th:if="${#fields.hasErrors('client.nom')}"
+							th:errors="${client.nom}"></span>
+					</div>
+					<div class="col-sm-6 form-group">
+						<label th:text="#{client.inscription.prenom}"></label> <input
+							type="text" th:field="*{client.prenom}"
+							th:placeholder="#{client.inscription.placeholder.prenom}"
+							class="form-control"> <span
+							th:if="${#fields.hasErrors('client.prenom')}"
+							th:errors="${client.prenom}"></span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-4 form-group">
+						<label th:text="#{client.inscription.email}"></label> <input
+							type="email" th:field="*{client.email}"
+							th:placeholder="#{client.inscription.placeholder.email}"
+							class="form-control"> <span
+							th:if="${#fields.hasErrors('client.email')}"
+							th:errors="${client.email}"></span>
+					</div>
+					<div class="col-sm-4 form-group">
+						<label th:text="#{client.inscription.telephone}"></label> <input
+							type="text" th:field="*{client.telephone}"
+							th:placeholder="#{client.inscription.placeholder.telephone}"
+							class="form-control"> <span
+							th:if="${#fields.hasErrors('client.telephone')}"
+							th:errors="${client.telephone}"></span>
+					</div>
+					<div class="col-sm-4 form-group">
+						<label th:text="#{client.inscription.dateNaissance}"></label> <input
+							type="date" th:field="*{client.dateNaissance}"
+							th:placeholder="#{client.inscription.placeholder.dateNaissance}"
+							class="form-control"> <span
+							th:if="${#fields.hasErrors('client.dateNaissance')}"
+							th:errors="${client.dateNaissance}"></span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-6 form-group">
+						<label th:text="#{client.inscription.password}"></label> <input
+							type="password" th:field="*{client.password}"
+							th:placeholder="#{client.inscription.placeholder.password}"
+							class="form-control"> <span
+							th:if="${#fields.hasErrors('client.password')}"
+							th:errors="${client.password}"></span>
+					</div>
+					<div class="col-sm-6 form-group">
+						<label th:text="#{client.inscription.password.confirm}"></label> <input
+							type="password" name="confirm" th:value="${confirm}"
+							th:placeholder="#{client.inscription.placeholder.password.confirm}"
+							class="form-control">
+
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-3 form-group">
+						<label th:text="#{client.inscription.adresse.num}"></label> <input
+							type="text" th:field="*{client.numAdresse}"
+							th:placeholder="#{client.inscription.adresse.num.placeholder}"
+							th:value="${client.numAdresse}" class="form-control"> <span
+							th:if="${#fields.hasErrors('client.numAdresse')}"
+							th:errors="${client.numAdresse}"></span>
+					</div>
+					<div class="col-sm-3 form-group">
+						<label th:text="#{client.inscription.adresse.rue}"></label> <input
+							type="text" th:field="*{client.rueAdresse}"
+							th:placeholder="#{client.inscription.adresse.rue.placeholder}"
+							th:value="${client.rueAdresse}" class="form-control"> <span
+							th:if="${#fields.hasErrors('client.rueAdresse')}"
+							th:errors="${client.rueAdresse}"></span>
+					</div>
+					<div class="col-sm-3 form-group">
+						<label th:text="#{client.inscription.adresse.cp}"></label> <input
+							type="text" th:field="*{client.cpAdresse}"
+							th:placeholder="#{client.inscription.adresse.cp.placeholder}"
+							th:value="${client.cpAdresse}" class="form-control"> <span
+							th:if="${#fields.hasErrors('client.cpAdresse')}"
+							th:errors="${client.cpAdresse}"></span>
+					</div>
+					<div class="col-sm-3 form-group">
+						<label th:text="#{client.inscription.adresse.ville}"></label> <input
+							type="text" th:field="*{client.villeAdresse}"
+							th:placeholder="#{client.inscription.adresse.ville.placeholder}"
+							th:value="${client.villeAdresse}" class="form-control"> <span
+							th:if="${#fields.hasErrors('client.villeAdresse')}"
+							th:errors="${client.villeAdresse}"></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label th:text="#{client.inscription.adresse.complement}"></label>
+					<textarea th:field="*{client.compAdresse}"
+						th:placeholder="#{client.inscription.adresse.complement.placeholder}"
+						th:text="${client.compAdresse}" class="form-control"></textarea>
+				</div>
+				<input th:value="#{client.inscriptio.submit}" type="submit"
+					class="btn btn-lg btn-info" />
+			</div>
+		</form>
+
+		<th:block xmlns:th="https://www.thymeleaf.org"
+			th:replace="/fragments/footer :: footer"></th:block>
+	</div>
+</body>
+
+</html>

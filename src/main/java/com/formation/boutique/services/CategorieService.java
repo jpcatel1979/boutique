@@ -33,7 +33,9 @@ public class CategorieService {
 
 	public void delete(final Long id) {
 		categorieRepository.deleteById(id);
-		
 	}
 	
+	public Integer countChildren(final Categorie categorie){
+		return categorieRepository.countByParent(categorie);
+	}
 }

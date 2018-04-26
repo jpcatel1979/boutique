@@ -3,6 +3,7 @@ package com.formation.boutique.entities;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -32,7 +33,7 @@ public class Article {
 	@PositiveOrZero
 	private Integer promo;
 	
-	@OneToMany(mappedBy = "article")
+	@OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
 	private Collection <Image> image = new ArrayList<>();
 	
 

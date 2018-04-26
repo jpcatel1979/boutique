@@ -119,7 +119,6 @@ public class ArticleController {
 		model.addAttribute("action", "/article/create");
 		model.addAttribute("method", "POST");
 		model.addAttribute("title", "Ajout Article");
-		System.out.println(article);
 		if (articleResult.hasErrors()) {
 			return "/pages/article/form";
 		}
@@ -143,7 +142,7 @@ public class ArticleController {
 		if (articleResult.hasErrors()) {
 			return "/pages/article/form";
 		}
-
+		article.setCode(codeArticle);
 		articleService.save(article);
 		// image.setArticle(article);
 		// imageService.save(image);
@@ -159,7 +158,6 @@ public class ArticleController {
 		model.addAttribute("action", "/article/delete/" + codeArticle);
 		model.addAttribute("title", "Suppresion Article");
 		model.addAttribute("method", "DELETE");
-		imageService.delete(image);
 		articleService.delete(article);
 		return "redirect:/";
 

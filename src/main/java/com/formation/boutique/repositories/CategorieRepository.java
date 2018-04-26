@@ -15,4 +15,8 @@ public interface CategorieRepository extends CrudRepository<Categorie, Long> {
 	@Transactional
 	void deleteByNom(String nom);
 
+	@Modifying
+	@Transactional
+	Integer countByParent(Categorie categorie);
+
 }

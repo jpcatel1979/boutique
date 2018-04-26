@@ -13,17 +13,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 
 import com.formation.boutique.entities.Categorie;
+import com.formation.boutique.services.ArticleService;
 import com.formation.boutique.services.CategorieService;
 
 
 @Controller
 public class CategorieController {
 CategorieService categorieService;
+ArticleService articleService;
 
 
 @Autowired
- public CategorieController(CategorieService categorieService) {
+ public CategorieController(CategorieService categorieService, ArticleService articleService) {
 	this.categorieService = categorieService;
+	this.articleService = articleService;
 }
 
 
@@ -111,7 +114,10 @@ CategorieService categorieService;
 		model.addAttribute("action","/categorie/delete" );
 		model.addAttribute("title","Supprimer Categorie");
 		model.addAttribute("method","DELETE");
-		categorieService.delete(categorie.getId());
+		System.out.println(articleService.countByCategorie(categorie.getId()));
+		Categorie cat = new Categorie();
+		cat = categorieService.getOne(categorie.getId());
+		//categorieService.delete(categorie.getId());
 		return "redirect:/";
 	}
 	

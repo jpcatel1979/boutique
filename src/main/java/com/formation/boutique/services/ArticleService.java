@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.formation.boutique.entities.Article;
+import com.formation.boutique.entities.Categorie;
 import com.formation.boutique.repositories.ArticleRepository;
 
 @Service
@@ -34,6 +35,11 @@ public class ArticleService {
 
 	public void delete(@Valid Article article) {
 		articleRepository.deleteById(article.getCode());
+	}
+
+	public int countByCategorie(final Long idCategorie) {
+		return countByCategorie(idCategorie);
+		
 	}
 	
 }
