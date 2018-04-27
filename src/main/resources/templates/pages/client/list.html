@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<th:block xmlns:th="https://www.thymeleaf.org"
+	th:replace="/fragments/header :: header"></th:block>
+
+<body>
+	<th:block xmlns:th="https://www.thymeleaf.org"
+		th:replace="/fragments/nav :: admin"></th:block>
+
+		<table class="table table-bordered table-hover ">
+			<thead>
+				<tr>
+					<th th:text="#{list.civilite}"></th>
+					<th th:text="#{list.nom}"></th>
+					<th th:text="#{list.prenom}"></th>
+					<th th:text="#{list.email}"></th>
+					<th th:text="#{list.cp}"></th>
+					<th th:text="#{list.ville}"></th>
+					<th th:text="#{list.date}"></th>
+					<th th:text="#{list.droit}"></th>
+					<th th:text="#{list.option}"></th>
+				</tr>
+			</thead>
+			<tbody th:each="compte : ${lstCompte}">
+				<tr>
+					<td th:text="${compte.civilite}"></td>
+					<td th:text="${compte.nom}"></td>
+					<td th:text="${compte.prenom}"></td>
+					<td th:text="${compte.email}"></td>
+					<td th:text="${compte.cpAdresse}"></td>
+					<td th:text="${compte.villeAdresse}"></td>
+					<td th:text="${compte.dateNaissance}"></td>
+					<td th:text="${compte.droit}"></td>
+					<td><span name="idUpdate" th:value="${compte.email}"><a
+							th:href="|/client/update/${compte.email}|"><input
+								th:value="#{list.modifier}"
+								class="col-sm-5 btn btn-success text-light"></a></span> <span
+						name="idDelete" th:value="${compte.email}"><a
+							th:href="|/client/delete/${compte.email}|"><input
+								th:value="#{list.supprimer}"
+								class="col-sm-5 btn btn-danger text-light"></a> </span></td>
+				</tr>
+
+			</tbody>
+
+
+		</table>
+
+		<th:block xmlns:th="https://www.thymeleaf.org"
+			th:replace="/fragments/footer :: footer"></th:block>
+</body>
+
+</html>

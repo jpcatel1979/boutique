@@ -11,5 +11,6 @@
 		th:replace="/fragments/footer :: footer"></th:block>
 	<h1 th:text="i18n"></h1>
 	<h1 th:text="#{inter}"></h1>
+	<h1 th:if="${session.client !=null}" th:text="|Bienvenu à ${session.client.email}|"></h1>
 </body>
 </html>

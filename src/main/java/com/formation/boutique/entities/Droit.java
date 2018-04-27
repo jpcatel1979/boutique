@@ -1,5 +1,16 @@
 package com.formation.boutique.entities;
 
 public enum Droit {
-	RULE_ADMIN,ROLE_USER,RULE_GUEST,RULE,WEBMASTER;
+	ROLE_USER("role.user"),RULE_WEBMASTER("role.webmaster"),RULE_ADMIN("role.admin");
+	private String valeur;
+
+	private Droit(){};
+	
+	private Droit(String valeur){
+		this.valeur = valeur;
+	}
+
+	public String getValeur() {
+		return valeur;
+	}
 }

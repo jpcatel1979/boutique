@@ -14,12 +14,20 @@ public class ClientService {
 	public ClientService(ClientRepository clientRepository) {
 		this.clientRepository = clientRepository;
 	}
-
+	
 	public Iterable<Client> getAll() {
 		return clientRepository.findAll();
 	}
 
 	public Client save(Client client) {
 		return clientRepository.save(client);
+	}
+
+	public void deleteByEmail(String email) {
+		clientRepository.deleteById(email);
+	}
+
+	public Client login(String email, String password) {
+		return clientRepository.findClientByEmailAndPassword(email, password);
 	}
 }

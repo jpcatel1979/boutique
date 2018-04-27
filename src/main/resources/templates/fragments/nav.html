@@ -34,6 +34,20 @@
 						class="dropdown-item" href="/categorie/list"></a>
 				</div>
 			</div>
+			
+			<button th:text="#{compte.nav}" type="button" class="btn btn-info"></button>
+			<div class="btn-group" role="group">
+				<button id="btnGroupDrop3" type="button"
+					class="btn btn-info dropdown-toggle" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="true"></button>
+				<div class="dropdown-menu" aria-labelledby="btnGroupDrop3"
+					x-placement="bottom-start"
+					style="position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
+					<a th:text="#{creation.nav}" class="dropdown-item"
+						href="/client/create"></a>  <a th:text="#{liste.nav}"
+						class="dropdown-item" href="/client/list"></a>
+				</div>
+			</div>
 		</div>
 	</div>
 </nav>
@@ -50,14 +64,15 @@
 				<div class="dropdown-menu" aria-labelledby="btnGroupDrop3"
 					x-placement="bottom-start"
 					style="position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
-					<a th:text="#{client.inscription.nav}" class="dropdown-item"
+					<a th:text="#{client.nav.inscription}" class="dropdown-item"
 						href="/client/inscription"></a> <a
-						th:text="#{client.connexion.nav}" class="dropdown-item"
-						href="/client/connexion"></a>
+						th:text="#{client.login.nav}" class="dropdown-item"
+						href="/client/login"></a>
+						<a
+						th:text="#{client.logout.nav}" class="dropdown-item"
+						href="/client/logout"></a>
 				</div>
 			</div>
-
-
 		</div>
 	</div>
 </nav>

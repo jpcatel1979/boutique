@@ -10,10 +10,6 @@
 	<div class=container>
 		<fieldset>
 
-
-
-
-
 			<form class="form-horizontal" role="form" th:method="${method}"
 				th:action="${action}">
 				<div class="row">
@@ -32,8 +28,8 @@
 								<div class="input-group-addon" style="width: 2.6rem">
 									<i class="fa fa-at"></i>
 								</div>
-								<input type="text" name="email" class="form-control" id="email"
-									th:value="${email}" th:placeholder="#{client.connexion.email}"
+								<input type="text" th:field="${login.email}" class="form-control" id="email"
+									th:value="${login.email}" th:placeholder="#{client.connexion.email}"
 									required autofocus>
 							</div>
 						</div>
@@ -50,15 +46,15 @@
 								<div class="input-group-addon" style="width: 2.6rem">
 									<i class="fa fa-key"></i>
 								</div>
-								<input type="password" name="password" class="form-control"
-									id="password" th:value="${password}"
+								<input type="password" th:field="${login.password}" class="form-control"
+									id="password" th:value="${login.password}"
 									th:placeholder="#{client.connexion.password}" required>
 							</div>
 						</div>
 					</div>
 					<div class="col-md-3">
 						<div class="form-control-feedback">
-							<span class="text-danger align-middle"> <!-- Put password error message here -->
+							<span th:text="#{${message}}"class="text-danger align-middle"> <!-- Put password error message here -->
 							</span>
 						</div>
 					</div>
@@ -75,6 +71,8 @@
 							href="/client/inscription"></a>
 					</div>
 				</div>
+				
+				
 			</form>
 
 

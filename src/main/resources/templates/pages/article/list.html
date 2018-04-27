@@ -18,10 +18,8 @@
 			<th th:text="#{list.article.image}"></th>
 			<th th:text="#{list.article.modifier}"></th>
 			<th th:text="#{list.article.supprimer}"></th>
-
-
-
 		</tr>
+		
 		<tr th:each="art : ${lstArticle}">
 			<td th:text="${art.code}"></td>
 			<td th:text="${art.nom}"></td>

@@ -5,7 +5,7 @@
 
 <body>
 	<th:block xmlns:th="https://www.thymeleaf.org"
-		th:replace="/fragments/nav :: user"></th:block>
+		th:replace="/fragments/nav :: admin"></th:block>
 
 	<div class=container>
 		<form th:method="${method}" th:action="${action}">
@@ -25,7 +25,7 @@
 						<span th:if="${#fields.hasErrors('client.civilite')}"
 							th:errors="${client.civilite}"></span>
 					</div>
-					<div class="col-sm-6 form-group">
+					<div class="col-sm-4 form-group">
 						<label th:text="#{client.inscription.nom}"></label> <input
 							type="text" th:field="*{client.nom}"
 							th:placeholder="#{client.inscription.placeholder.nom}"
@@ -33,13 +33,23 @@
 							th:if="${#fields.hasErrors('client.nom')}"
 							th:errors="${client.nom}"></span>
 					</div>
-					<div class="col-sm-6 form-group">
+					<div class="col-sm-4 form-group">
 						<label th:text="#{client.inscription.prenom}"></label> <input
 							type="text" th:field="*{client.prenom}"
 							th:placeholder="#{client.inscription.placeholder.prenom}"
 							class="form-control"> <span
 							th:if="${#fields.hasErrors('client.prenom')}"
 							th:errors="${client.prenom}"></span>
+					</div>
+
+					<div class="col-sm-4 form-group">
+					<label th:text="#{client.inscription.droit}"></label>
+						<select class="form-control"
+						th:field="*{client.droit}">
+							<option th:each="droit : ${lstDroit}" th:value="*{droit}"
+								th:text="#{${droit.valeur}}"></option>
+						</select>
+
 					</div>
 				</div>
 				<div class="row">
