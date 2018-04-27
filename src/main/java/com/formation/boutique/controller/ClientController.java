@@ -172,6 +172,31 @@ public class ClientController {
 		return "/pages/home";
 	}
 	
+	@PutMapping("/client/modification")
+	public String modification(@Valid @ModelAttribute(name = "client") Client client, BindingResult resultClient,
+		@Valid @ModelAttribute(name = "password2") String password2, ModelMap model){
+		model.addAttribute("lstCivilite", Civilite.values());
+		model.addAttribute("password2", password2);
+		model.addAttribute("action", "/client/modification");
+		model.addAttribute("method", "PUT");
+		model.addAttribute("title","client.inscription.entete.update");
+		String passwordBDD = clientService.getOne(client.getEmail()).getPassword();
+		client.setDroit(Droit.RULE_USER);
+		//l'utilisateur à modifier le mots de passe
+		if(!passwordBDD.equals(client.getPassword())){
+			password2 = Client.get_SHA_512_SecurePassword(password2);
+		}
+		//nouveau mot de passe 
+		if(!passwordValid(client.getPassword(), password2)){	
+			return "/pages/client/modification";
+		}
+		
+		if (resultClient.hasErrors()) {
+			return "/pages/client/modification";
+		}
+		clientService.save(client);
+		return "/pages/home";
+	}
 	
 	public boolean passwordValid(String password, String confirmPassword) {
 			return password.equals(confirmPassword);
