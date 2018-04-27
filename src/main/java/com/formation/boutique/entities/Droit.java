@@ -1,7 +1,7 @@
 package com.formation.boutique.entities;
 
 public enum Droit {
-	ROLE_USER("role.user"),RULE_WEBMASTER("role.webmaster"),RULE_ADMIN("role.admin");
+	RULE_USER("role.user"),RULE_WEBMASTER("role.webmaster"),RULE_ADMIN("role.admin");
 	private String valeur;
 
 	private Droit(){};

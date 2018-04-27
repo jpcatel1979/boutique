@@ -30,4 +30,8 @@ public class ClientService {
 	public Client login(String email, String password) {
 		return clientRepository.findClientByEmailAndPassword(email, password);
 	}
+
+	public Client getOne(String email) {
+		return clientRepository.findByEmail(email);
+	}
 }

@@ -4,13 +4,11 @@
 
 <body>
 	<th:block xmlns:th="https://www.thymeleaf.org"
-		th:replace="/fragments/nav :: admin"></th:block>
-	<th:block xmlns:th="https://www.thymeleaf.org"
-		th:replace="/fragments/nav :: user"></th:block>
+		th:replace="/fragments/nav :: menu"></th:block>
+	
 	<th:block xmlns:th="https://www.thymeleaf.org"
 		th:replace="/fragments/footer :: footer"></th:block>
-	<h1 th:text="i18n"></h1>
-	<h1 th:text="#{inter}"></h1>
-	<h1 th:if="${session.client !=null}" th:text="|Bienvenu à ${session.client.email}|"></h1>
+
+	<h1 th:if="${session.client !=null}" th:text="|Welcome ${session.client.email} *{session.client.droit.valeur}|"></h1>
 </body>
 </html>

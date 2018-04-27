@@ -5,14 +5,14 @@
 
 <body>
 	<th:block xmlns:th="https://www.thymeleaf.org"
-		th:replace="/fragments/nav :: admin"></th:block>
+		th:replace="/fragments/nav :: menu"></th:block>
 
 	<div class=container>
 		<form th:method="${method}" th:action="${action}">
 			<div class="col-sm-12">
 				<div class="row">
 					<div class="col-sm-12 form-group">
-						<h2 th:text="#{client.inscription.entete}"></h2>
+						<h2 th:text="#{${title}}"></h2>
 					</div>
 					<div class="col-sm-12 form-group row">
 
@@ -53,7 +53,7 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-sm-4 form-group">
+					<div th:if="${method} != PUT" class="col-sm-4 form-group">
 						<label th:text="#{client.inscription.email}"></label> <input
 							type="email" th:field="*{client.email}"
 							th:placeholder="#{client.inscription.placeholder.email}"
@@ -61,6 +61,16 @@
 							th:if="${#fields.hasErrors('client.email')}"
 							th:errors="${client.email}"></span>
 					</div>
+					
+					<div th:if="${method} == PUT" class="col-sm-4 form-group">
+						<label th:text="#{client.inscription.email}"></label> <input readonly
+							type="email" th:field="*{client.email}"
+							th:placeholder="#{client.inscription.placeholder.email}"
+							class="form-control"> <span
+							th:if="${#fields.hasErrors('client.email')}"
+							th:errors="${client.email}"></span>
+					</div>
+					
 					<div class="col-sm-4 form-group">
 						<label th:text="#{client.inscription.telephone}"></label> <input
 							type="text" th:field="*{client.telephone}"
@@ -81,7 +91,7 @@
 				<div class="row">
 					<div class="col-sm-6 form-group">
 						<label th:text="#{client.inscription.password}"></label> <input
-							type="password" th:field="*{client.password}"
+							th:type="password" name="password" th:value="${client.password}"
 							th:placeholder="#{client.inscription.placeholder.password}"
 							class="form-control"> <span
 							th:if="${#fields.hasErrors('client.password')}"
@@ -89,7 +99,7 @@
 					</div>
 					<div class="col-sm-6 form-group">
 						<label th:text="#{client.inscription.password.confirm}"></label> <input
-							type="password" name="password2"
+							type="password" name="password2" th:value="${password2}"
 							th:placeholder="#{client.inscription.placeholder.password.confirm}"
 							class="form-control">
 

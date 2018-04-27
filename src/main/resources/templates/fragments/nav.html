@@ -1,10 +1,10 @@
 
-<nav th:fragment="admin" class="navbar navbar-nav">
+<nav th:fragment="menu" class="navbar navbar-nav">
 	<div class="container-fluid">
 		<div class="btn-group" role="group"
 			aria-label="Button group with nested dropdown">
-			<button th:tabindex="#{article.nav}" type="button"
-				class="btn btn-info">Article</button>
+			<button th:text="#{article.nav}" type="button"
+				class="btn btn-info"></button>
 			<div class="btn-group" role="group">
 				<button id="btnGroupDrop3" type="button"
 					class="btn btn-info dropdown-toggle" data-toggle="dropdown"
@@ -12,15 +12,15 @@
 				<div class="dropdown-menu" aria-labelledby="btnGroupDrop3"
 					x-placement="bottom-start"
 					style="position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
-					<a th:text="#{creation.nav}" class="dropdown-item"
+					<a th:text="#{creation.nav}" class="dropdown-item" th:if="${session.client !=null and (session.client.droit.valeur == 'role.admin' OR session.client.droit.valeur == 'role.webmaster')}"
 						href="/article/create"></a> <a th:text="#{liste.nav}"
 						class="dropdown-item" href="/article/list"></a>
 				</div>
 			</div>
 
-			<button th:text="#{categorie.nav}" type="button" class="btn btn-info"></button>
+			<button th:if="${session.client !=null and session.client.droit.valeur != 'role.user'}" th:text="#{categorie.nav}" type="button" class="btn btn-info"></button>
 			<div class="btn-group" role="group">
-				<button id="btnGroupDrop3" type="button"
+				<button th:if="${session.client !=null and session.client.droit.valeur != 'role.user'}" id="btnGroupDrop3" type="button"
 					class="btn btn-info dropdown-toggle" data-toggle="dropdown"
 					aria-haspopup="true" aria-expanded="true"></button>
 				<div class="dropdown-menu" aria-labelledby="btnGroupDrop3"
@@ -28,14 +28,29 @@
 					style="position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
 					<a th:text="#{creation.nav}" class="dropdown-item"
 						href="/categorie/create"></a> <a th:text="#{maj.nav}"
-						class="dropdown-item" href="/categorie/update"></a> <a
+						class="dropdown-item" href="/categorie/update"></a> <a th:if="${session.client !=null and session.client.droit.valeur == 'role.admin'}"
 						th:text="#{suppresion.nav}" class="dropdown-item"
 						href="/categorie/delete"></a> <a th:text="#{liste.nav}"
 						class="dropdown-item" href="/categorie/list"></a>
 				</div>
 			</div>
-			
-			<button th:text="#{compte.nav}" type="button" class="btn btn-info"></button>
+
+			<button th:if="${session.client !=null and session.client.droit.valeur == 'role.admin'}" th:text="#{compte.nav}" type="button" class="btn btn-info"></button>
+			<div class="btn-group" role="group">
+				<button th:if="${session.client !=null and session.client.droit.valeur == 'role.admin'}" id="btnGroupDrop3" type="button"
+					class="btn btn-info dropdown-toggle" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="true"></button>
+				<div class="dropdown-menu" aria-labelledby="btnGroupDrop3"
+					x-placement="bottom-start"
+					style="position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
+					<a th:text="#{creation.nav}" class="dropdown-item"
+						href="/client/create"></a> <a th:text="#{liste.nav}"
+						class="dropdown-item" href="/client/list"></a>
+				</div>
+			</div>
+
+			<button th:text="#{client.nav}"
+				type="button" class="btn btn-info"></button>
 			<div class="btn-group" role="group">
 				<button id="btnGroupDrop3" type="button"
 					class="btn btn-info dropdown-toggle" data-toggle="dropdown"
@@ -43,12 +58,19 @@
 				<div class="dropdown-menu" aria-labelledby="btnGroupDrop3"
 					x-placement="bottom-start"
 					style="position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
-					<a th:text="#{creation.nav}" class="dropdown-item"
-						href="/client/create"></a>  <a th:text="#{liste.nav}"
-						class="dropdown-item" href="/client/list"></a>
+					<a th:text="#{client.nav.inscription}" class="dropdown-item"
+						href="/client/inscription"></a> <a th:text="#{client.login.nav}"
+						class="dropdown-item" href="/client/login"></a> <a
+						th:text="#{client.logout.nav}" class="dropdown-item"
+						href="/client/logout"></a>
+						<a
+						th:text="#{client.modification.nav}" class="dropdown-item"
+						href="/client/modification"></a>
 				</div>
 			</div>
 		</div>
+	</div>
+	</div>
 	</div>
 </nav>
 <nav th:fragment="user" class="navbar navbar-nav">
@@ -65,10 +87,8 @@
 					x-placement="bottom-start"
 					style="position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
 					<a th:text="#{client.nav.inscription}" class="dropdown-item"
-						href="/client/inscription"></a> <a
-						th:text="#{client.login.nav}" class="dropdown-item"
-						href="/client/login"></a>
-						<a
+						href="/client/inscription"></a> <a th:text="#{client.login.nav}"
+						class="dropdown-item" href="/client/login"></a> <a
 						th:text="#{client.logout.nav}" class="dropdown-item"
 						href="/client/logout"></a>
 				</div>

@@ -63,7 +63,7 @@ public class ArticleController {
 		for (Image img : lstImage) {
 			image.setLien(img.getLien());
 		}
-
+		
 		model.addAttribute("article", article);
 		model.addAttribute("image", image);
 		model.addAttribute("lstCategorie", categorieService.getAll());
@@ -71,11 +71,47 @@ public class ArticleController {
 		model.addAttribute("article", articleService.getOne(codeArticle));
 		model.addAttribute("title", "Mise à jour Article");
 		model.addAttribute("method", "PUT");
+		model.addAttribute("action", "/article/update/"+codeArticle);
+
 
 		return "pages/article/form";
 
 	}
 
+	@GetMapping("/article/consulter/{codeArticle}")
+	public String getDetail(@PathVariable Long codeArticle, ModelMap model) {
+		
+		Article article = articleService.getOne(codeArticle);
+		if (article.equals(null)) {
+			return "pages/";
+		}
+
+		Image image = new Image();
+		Collection<Image> lstImage = article.getImage();
+
+		for (Image img : lstImage) {
+			image.setLien(img.getLien());
+		}
+
+		model.addAttribute("article", article);
+		model.addAttribute("image", image);
+		model.addAttribute("lstCategorie", categorieService.getAll());
+		model.addAttribute("categorie", article.getCategorie());
+		model.addAttribute("article", articleService.getOne(codeArticle));
+		model.addAttribute("title", "Details Article");
+		model.addAttribute("method", "POST");
+		model.addAttribute("action", "/article/list/");
+
+
+		return "pages/article/form";
+
+	}
+	
+	@PostMapping("/article/list")
+	public String retourList(){
+		return "redirect:/article/list";
+	}
+	
 	@GetMapping("article/delete/{codeArticle}")
 	public String getDelete(@PathVariable Long codeArticle, ModelMap model) {
 
@@ -119,6 +155,8 @@ public class ArticleController {
 		model.addAttribute("action", "/article/create");
 		model.addAttribute("method", "POST");
 		model.addAttribute("title", "Ajout Article");
+		model.addAttribute("action", "/article/create");
+
 		if (articleResult.hasErrors()) {
 			return "/pages/article/form";
 		}

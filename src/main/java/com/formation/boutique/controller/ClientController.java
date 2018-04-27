@@ -10,17 +10,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import com.formation.boutique.entities.Civilite;
 import com.formation.boutique.entities.Client;
 import com.formation.boutique.entities.Droit;
-import com.formation.boutique.entities.Login;
 import com.formation.boutique.services.ClientService;
 
 @Controller
 public class ClientController {
 
+	private static final String String = null;
 	private final ClientService clientService;
 
 	public ClientController(ClientService clientService) {
@@ -35,6 +35,7 @@ public class ClientController {
 		model.addAttribute("lstCivilite", Civilite.values());
 		model.addAttribute("password2", "");
 		model.addAttribute("action", "/client/inscription");
+		model.addAttribute("title","client.inscription.entete.create");
 		model.addAttribute("method", "POST");
 		return "/pages/client/inscription";
 	}
@@ -47,11 +48,36 @@ public class ClientController {
 		model.addAttribute("lstDroit", Droit.values());
 		model.addAttribute("password2", "");
 		model.addAttribute("action", "/client/create");
+		model.addAttribute("title","client.inscription.entete.create");
 		model.addAttribute("method", "POST");
 		return "/pages/client/create";
 	}
 	
+	@GetMapping("/client/update/{email}")
+	public String getUpdateClientByAdmin(@PathVariable String email,ModelMap model) {
+
+		Client clientBDD = clientService.getOne(email);
+		model.addAttribute("client", clientBDD);
+		model.addAttribute("lstCivilite", Civilite.values());
+		model.addAttribute("lstDroit", Droit.values());
+		model.addAttribute("password2", clientBDD.getPassword());
+		model.addAttribute("action", "/client/update/"+email);
+		model.addAttribute("title","client.inscription.entete.update");
+		model.addAttribute("method", "PUT");
+		return "/pages/client/create";
+	}
 	
+	@GetMapping("/client/modification")
+	public String getUpdateClientByUser(ModelMap model, HttpSession httpSession) {
+		String email = ((Client) httpSession.getAttribute("client")).getEmail();
+		model.addAttribute("client", clientService.getOne(email));
+		model.addAttribute("lstCivilite", Civilite.values());
+		model.addAttribute("password2", clientService.getOne(email).getPassword());
+		model.addAttribute("action", "/client/modification");
+		model.addAttribute("title","client.inscription.entete.update");
+		model.addAttribute("method", "PUT");
+		return "/pages/client/inscription";
+	}
 
 	
 	@GetMapping("/client/list")
@@ -77,8 +103,9 @@ public class ClientController {
 		model.addAttribute("lstCivilite", Civilite.values());
 		model.addAttribute("password2", password2);
 		model.addAttribute("action", "/client/inscription");
+		model.addAttribute("title","client.inscription.entete.create");
 		model.addAttribute("method", "POST");
-		client.setDroit(Droit.ROLE_USER);
+		client.setDroit(Droit.RULE_USER);
 		password2 = Client.get_SHA_512_SecurePassword(password2);
 
 		if(!passwordValid(client.getPassword(), password2)){
@@ -97,13 +124,44 @@ public class ClientController {
 			@Valid @ModelAttribute(name = "password2") String password2, ModelMap model) {
 		model.addAttribute("lstCivilite", Civilite.values());
 		model.addAttribute("lstDroit", Droit.values());
-
 		model.addAttribute("password2", password2);
 		model.addAttribute("action", "/client/create");
 		model.addAttribute("method", "POST");
-		
+		model.addAttribute("title","client.inscription.entete.create");
+
 		password2 = Client.get_SHA_512_SecurePassword(password2);
 		if(!passwordValid(client.getPassword(), password2)){
+			return "/pages/client/create";
+		}
+		
+		if (resultClient.hasErrors()) {
+			return "/pages/client/create";
+		}
+		clientService.save(client);
+		return "/pages/home";
+	}
+	
+	@PutMapping("/client/update/{email}")
+	public String postUpdate(
+			@PathVariable String email,
+			@Valid @ModelAttribute(name = "client") Client client, BindingResult resultClient,
+			@Valid @ModelAttribute(name = "password2") String password2, ModelMap model) {
+		
+		model.addAttribute("lstCivilite", Civilite.values());
+		model.addAttribute("lstDroit", Droit.values());
+		model.addAttribute("password2", password2);
+		model.addAttribute("action", "/client/update/"+email);
+		model.addAttribute("method", "PUT");
+		model.addAttribute("title","client.inscription.entete.update");
+		String passwordBDD = clientService.getOne(email).getPassword();
+
+		//l'utilisateur à modifier le mots de passe
+		if(!passwordBDD.equals(client.getPassword())){
+			password2 = Client.get_SHA_512_SecurePassword(password2);
+		}
+		//nouveau mot de passe 
+		if(!passwordValid(client.getPassword(), password2)){
+			
 			return "/pages/client/create";
 		}
 		
