@@ -1,5 +1,8 @@
 package com.formation.boutique.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -16,6 +19,8 @@ import com.formation.boutique.entities.Civilite;
 import com.formation.boutique.entities.Client;
 import com.formation.boutique.entities.Droit;
 import com.formation.boutique.entities.Login;
+import com.formation.boutique.entities.Article;
+
 import com.formation.boutique.services.ClientService;
 
 @Controller
@@ -47,6 +52,8 @@ public class LoginController {
 	public String postConnexion(@Valid @ModelAttribute(name = "login") Login login, BindingResult resultLogin, ModelMap model, HttpSession httpSession){
 	
 		Client client = clientService.login(login.getEmail(),login.getPassword());
+		List <Article> lstArticlePanier = new ArrayList<>(); 
+		Float totalCommande = new Float(0);
 		if(resultLogin.hasErrors() || client == null){
 			model.addAttribute("action", "/client/login");
 			model.addAttribute("method", "POST");
@@ -56,6 +63,9 @@ public class LoginController {
 		}
 		httpSession.setMaxInactiveInterval(60 *60 * 24);
 		httpSession.setAttribute("client", client);
+		httpSession.setAttribute("panier", lstArticlePanier);
+		httpSession.setAttribute("totalCommande", totalCommande );
+		
 		return "redirect:/";
 	}
 	

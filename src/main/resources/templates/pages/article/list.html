@@ -16,8 +16,9 @@
 			<th th:text="#{list.article.promo}"></th>
 			<th th:text="#{list.article.categorie}"></th>
 			<th th:text="#{list.article.image}"></th>
-			<th th:text="#{list.article.option}"></th>
-		<tr th:each="art : ${lstArticle}">
+			<th th:if="${session.client	!=null}" th:text="#{list.article.option}"></th>
+			<th th:if="${session.panier != null}" th:text="#{list.article.ajouter.panier}"></th>	
+			<tr th:each="art : ${lstArticle}">
 			<td th:text="${art.code}"></td>
 			<td th:text="${art.nom}"></td>
 			<td th:text="${art.prix}"></td>
@@ -39,8 +40,15 @@
 					th:value="#{list.article.supprimer}"
 					class="col-sm-4 btn btn-danger text-light">
 			</a>
+		
 			</td>
-
+			<td th:if="${session.panier != null}"> 	<a
+				th:href="|/panier/ajouter/${art.code}|"> <input
+					th:value="#{list.article.ajouter}"
+					class="col-sm-12 btn btn-primary text-light">
+			</a>
+			</td>
+			<tr>
 
 			<td
 				th:if="${session.client	!=null and (session.client.droit.valeur=='role.webmaster')}">

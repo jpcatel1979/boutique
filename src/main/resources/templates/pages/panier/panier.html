@@ -1,0 +1,51 @@
+<html>
+<th:block xmlns:th="https://www.thymeleaf.org"
+	th:replace="/fragments/header :: header"></th:block>
+
+<body>
+	<th:block xmlns:th="https://www.thymeleaf.org"
+		th:replace="/fragments/nav :: menu"></th:block>
+	<div class="container">
+		<table class="table table-bordered table-hover ">
+			<tr>
+				<th th:text="#{list.article.nom}"></th>
+				<th th:text="#{list.article.prix}"></th>
+				<th th:text="#{list.article.promo}"></th>
+				<th th:text="#{list.article.supprimer}"></th>
+
+			</tr>
+
+			<tr th:each="art : ${session.panier}">
+
+				<td th:text="${art.nom}"></td>
+				<td th:text="${art.prix}"></td>
+				<td th:text="${art.promo}"></td>
+				<td><a th:href="|/panier/supprimer/${art.code}|"> <input
+						th:value="#{list.article.supprimer}"
+						class="col-sm-12 btn btn-danger text-light"></td>
+			</tr>
+
+
+			</tr>
+		</table>
+		<div class="row col-sm-4  float-right text-light bg bg-info">
+			<p class="col-sm-6 text-left" th:text="#{totalText}"></p>
+			<p class="col-sm-6 text-right"
+				th:text="${session.totalCommande}">
+		</p>
+			</div>
+		<br>
+		<br>
+		<div class="row col-sm-4  float-right text-light btn btn-success">
+
+			<a th:href="|/commande|"> <input
+				th:value="#{list.article.commander}"
+				class="col-sm-12 btn btn-success text-light float-right">
+		</div>
+	</div>
+	</div>
+	<th:block xmlns:th="https://www.thymeleaf.org"
+		th:replace="/fragments/footer :: footer"></th:block>
+
+</body>
+</html>

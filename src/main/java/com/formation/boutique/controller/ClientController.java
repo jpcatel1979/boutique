@@ -20,7 +20,6 @@ import com.formation.boutique.services.ClientService;
 @Controller
 public class ClientController {
 
-	private static final String String = null;
 	private final ClientService clientService;
 
 	public ClientController(ClientService clientService) {
@@ -35,7 +34,8 @@ public class ClientController {
 		model.addAttribute("lstCivilite", Civilite.values());
 		model.addAttribute("password2", "");
 		model.addAttribute("action", "/client/inscription");
-		model.addAttribute("title","client.inscription.entete.create");
+		model.addAttribute("title","client.inscription.entete.inscription");
+		model.addAttribute("boutton","client.inscription.submit");
 		model.addAttribute("method", "POST");
 		return "/pages/client/inscription";
 	}
@@ -48,7 +48,7 @@ public class ClientController {
 		model.addAttribute("lstDroit", Droit.values());
 		model.addAttribute("password2", "");
 		model.addAttribute("action", "/client/create");
-		model.addAttribute("title","client.inscription.entete.create");
+		model.addAttribute("title","client.inscription.entete.update");
 		model.addAttribute("method", "POST");
 		return "/pages/client/create";
 	}
@@ -75,6 +75,8 @@ public class ClientController {
 		model.addAttribute("password2", clientService.getOne(email).getPassword());
 		model.addAttribute("action", "/client/modification");
 		model.addAttribute("title","client.inscription.entete.update");
+		model.addAttribute("boutton","client.inscription.update");
+
 		model.addAttribute("method", "PUT");
 		return "/pages/client/inscription";
 	}
@@ -96,7 +98,6 @@ public class ClientController {
 
 	}
 	
-	
 	@PostMapping("/client/inscription")
 	public String postInscription(@Valid @ModelAttribute(name = "client") Client client, BindingResult resultClient,
 			@Valid @ModelAttribute(name = "password2") String password2, ModelMap model) {
@@ -104,6 +105,7 @@ public class ClientController {
 		model.addAttribute("password2", password2);
 		model.addAttribute("action", "/client/inscription");
 		model.addAttribute("title","client.inscription.entete.create");
+		model.addAttribute("boutton","client.inscription.submit");
 		model.addAttribute("method", "POST");
 		client.setDroit(Droit.RULE_USER);
 		password2 = Client.get_SHA_512_SecurePassword(password2);
@@ -180,6 +182,8 @@ public class ClientController {
 		model.addAttribute("action", "/client/modification");
 		model.addAttribute("method", "PUT");
 		model.addAttribute("title","client.inscription.entete.update");
+		model.addAttribute("boutton","client.inscription.update");
+
 		String passwordBDD = clientService.getOne(client.getEmail()).getPassword();
 		client.setDroit(Droit.RULE_USER);
 		//l'utilisateur à modifier le mots de passe
